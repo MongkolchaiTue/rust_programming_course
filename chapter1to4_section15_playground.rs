@@ -11,7 +11,7 @@ https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=f6d21e0f
 
 fn main() {
     //Chapter 4 - Section 15 What Are Structs in Rust
-    cpt4_sct15_slice();
+    cpt4_sct15_structs();
     
     //Chapter 4 - Section 12 How to Slice in Rust
     cpt4_sct12_slice();
@@ -1061,7 +1061,7 @@ fn slice_and_dice(slice:&mut [i32]) {
     slice[0] = 200;
 }
 
-fn cpt4_sct15_slice() {
+fn cpt4_sct15_structs() {
     //Chapter 4 - Section 15 What Are Structs in Rust
     println!("Chapter 4 - Section 15 What Are Structs in Rust");
     
