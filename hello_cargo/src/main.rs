@@ -1,3 +1,6 @@
+// packtpub.com Rust Programming 2023 - A Comprehensive Course for Beginners By : Clarian North
+// coding example by Mongkolchai Tue
+
 fn main() {
     //println!("Hello, world!");
     //Chapter 5 - Intermediate to Advanced Videos in Rust
