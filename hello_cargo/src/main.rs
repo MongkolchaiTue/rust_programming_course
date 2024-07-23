@@ -30,7 +30,7 @@ fn cpt5_sct15_pointers() {
     but also have additional metadata and capabilities.
 
     The concept of smart pointers isn't unique ro Rust: smart pointers originated in C++
-    and exist in other languages as...
+    and exist in other languages as well.
     Rust has a variety of smart pointers defined in the standard library
     that provide functionality beyond that provided by referrences.
 
