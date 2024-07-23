@@ -241,9 +241,9 @@ fn cpt5_sct01_error_handling() {
 		pub fn play(name: String) {
 			println!("track selections: {}", name);
 		}
-		pub mod songs {
+		pub mod song {
 			pub fn play(name: String) {
-				println!("track selections: {}", name);
+				println!("track selection: {}", name);
 			}
 		}
 	}
@@ -298,7 +298,7 @@ fn cpt4_sct21_modules() {
     //     }
     // }
     
-    use songs::songs::play;
+    use songs::song::play;
     use songs::play as play_other;
     play("Kissed By A Rose".to_string());
     play_other("Kissed By Other".to_string());
