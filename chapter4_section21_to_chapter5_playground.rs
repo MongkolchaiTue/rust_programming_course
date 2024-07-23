@@ -95,7 +95,7 @@ fn cpt5_sct05_reader_writer_file() {
         Ok(())
     }
     
-    let readfile = buff_reader();
+    let _readfile = buff_reader();
 
     println!("Chapter 5 - Section 6-7...end");
 }
