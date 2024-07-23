@@ -233,6 +233,31 @@ fn cpt5_sct01_error_handling() {
     println!("Chapter 5 - Section 1...end");
 }
 
+// Chapter 4 - Section 21 What Are Modules in Rust
+	// The use keyword helps to import a public module.
+	// functions are defaulted to private
+	// Module Example in Rust
+	pub mod songs {
+		pub fn play(name: String) {
+			println!("track selections: {}", name);
+		}
+		pub mod songs {
+			pub fn play(name: String) {
+				println!("track selections: {}", name);
+			}
+		}
+	}
+	//Exercise - Nested Modules in Rust
+    pub mod tracks {
+        pub mod rock {
+            pub mod indie {
+                pub fn select(x:String) {
+                    println!("module tracks.rock.indie function select: {}", x);
+                }
+            }
+        }
+    }
+
 fn cpt4_sct21_modules() {
     //Chapter 4 - Section 21 What Are Modules in Rust
     println!("Chapter 4 - Section 21 What Are Modules in Rust");
@@ -262,16 +287,16 @@ fn cpt4_sct21_modules() {
     // The use keyword helps to import a public module.
     // functions are defaulted to private
     // Module Example in Rust
-    pub mod songs {
-        pub fn play(name: String) {
-            println!("track selections: {}", name);
-        }
-        pub mod songs {
-            pub fn play(name: String) {
-                println!("track selections: {}", name);
-            }
-        }
-    }
+    // pub mod songs {
+    //     pub fn play(name: String) {
+    //         println!("track selections: {}", name);
+    //     }
+    //     pub mod song {
+    //         pub fn play(name: String) {
+    //             println!("track selection: {}", name);
+    //         }
+    //     }
+    // }
     
     use songs::songs::play;
     use songs::play as play_other;
@@ -290,15 +315,15 @@ fn cpt4_sct21_modules() {
     
     */
     
-    pub mod tracks {
-        pub mod rock {
-            pub mod indie {
-                pub fn select(x:String) {
-                    println!("module tracks.rock.indie function select: {}", x);
-                }
-            }
-        }
-    }
+    // pub mod tracks {
+    //     pub mod rock {
+    //         pub mod indie {
+    //             pub fn select(x:String) {
+    //                 println!("module tracks.rock.indie function select: {}", x);
+    //             }
+    //         }
+    //     }
+    // }
     
     
     use tracks::rock::indie::select;
