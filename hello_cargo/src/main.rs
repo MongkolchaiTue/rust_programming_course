@@ -1,6 +1,9 @@
 fn main() {
     //println!("Hello, world!");
-    //Chapter 5 - Intermediate to Advanced Videos in Rust
+    // Chapter 5 - Intermediate to Advanced Videos in Rust
+
+    // Chapter 5 - Section 19 - Multi-Threads in Rust
+    cpt5_sct18_multi_threads();
 
     //Chapter 5 - Section 15  What Are Smart Pointers in Rust
     cpt5_sct15_pointers();
@@ -13,6 +16,17 @@ fn main() {
 
 }
 
+
+fn cpt5_sct18_multi_threads() {
+    // Chapter 5 - Section 19 - Multi-Threads in Rust
+    println!("Chapter 5 - Section 19 - Multi-Threads in Rust");
+    /*
+
+    */
+    
+
+    println!("Chapter 5 - Section 19...end");
+}
 
 fn cpt5_sct15_pointers() {
     //Chapter 5 - Section 15  What Are Smart Pointers in Rust
@@ -57,6 +71,67 @@ fn cpt5_sct15_pointers() {
 
     println!("{}", "hello"==greeting);
     println!("{}", "hello"==*greeting_heap);
+
+    println!("Section 16 - Code Along and Customize Your Own Smart Pointer in Rust");
+
+    /*
+    Section 16 - Code Along and Customize Your Own Smart Pointer in Rust
+
+    Smart pointers are a powerful tool for managing memory in Rust,
+    allowing you to create more complex data structures and avoid common memory management pitfalls.
+    However, out of the box, Rust only provides a handful of smart pointer types, such as Box and Rc.
+    
+    In this video,
+    we will take a deep dive into how smart pointers work in Rust,
+    and we will code along to create our own custom smart pointer type.
+
+    */
+    use std::ops::Deref;
+
+    struct CustomizeSmartPointer<T>(T);
+
+    impl <T> CustomizeSmartPointer<T> {
+        // generic structure with static method
+        fn heap_allocation(value: T) -> CustomizeSmartPointer<T> {
+            CustomizeSmartPointer(value)
+        }
+    }
+
+    // implement deref trait
+    impl <T> Deref for CustomizeSmartPointer<T> {
+        type Target = T;    // in traits, type is used to declare an associated type
+        fn deref(&self) -> &T {
+            &self.0 //syntax for taking the first argument which is 0
+        }
+    }
+
+    let color = "green";
+    //call static method
+    let ref_color = CustomizeSmartPointer::heap_allocation(color);
+    println!("green value is the same as color which is {}", "green"==color);
+    println!("green value is the same as color which is {}", "green"==*ref_color);
+
+    // Section 18 - Exercise—Customize Your Own Custom Smart Pointer
+    println!("Section 18 - Exercise—Customize Your Own Custom Smart Pointer");
+
+    /*
+    Exercise - Customize your own Smart Pointer in Rust
+    In Rust, you can achieve automatic memory deallocation using Drop trait.
+
+    1. Implement the Drop trait for our Custom Pointer.
+    It should include a function called specifically drop and print in the function
+    a completion run of the drop object from memory.
+
+    */
+
+    use std::ops::Drop;
+    // implement drop trait
+    impl <T> Drop for CustomizeSmartPointer<T> {
+        fn drop(&mut self) {
+            println!("dropping CustomSmartPointer object from memory");
+        }
+    }
+
 
     println!("Chapter 5 - Section 15...end");
 }
