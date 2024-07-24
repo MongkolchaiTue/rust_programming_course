@@ -24,9 +24,102 @@ fn cpt5_sct18_multi_threads() {
     // Chapter 5 - Section 19 - Multi-Threads in Rust
     println!("Chapter 5 - Section 19 - Multi-Threads in Rust");
     /*
+    Concurrency in Rust
+    
+    When you want to have different parts of a program execute independantly
+    you are looking at the concept of concurrency.
+    Whereas with parralel programming you have different parts of the program
+    or computers executing at the same time
+    Both of these model stem from the core feature of multiple processing.
+
+    Threads
+
+    We use threads to run codes at the same time.
+    Operating systems manage multiple processes at once and programs execute code in a process
+
+    When you have independent parts of your code that run together you are using
+    the feature of multi threaded programming.
+
+    How to Create A Thread in Rust
+
+    We can create threads in Rust with thread::spawn
+
+    The parameter for the spawn is a closure which defines the code.
+
+    Every thread is equipped with some basic low-level blocking support,
+    via the thread::park function
+    and  thread::Thread::unpark method.
+    park blocks the current thread,
+    which can then be resumed from another thread
+    by calling the unpark method on the blocked thread's handle.
 
     */
     
+    //import modules
+    use std::thread;
+    use std::time::Duration;
+
+    let park_thread = thread::Builder::new().spawn(
+        || {
+            println!("1.Parking Thread!");
+            thread::park();
+            println!("4.Thread unparked!");
+        }
+    ).unwrap(); // give me the result and if there is an error paniccc and stop the program
+    thread::sleep(Duration::from_millis(10));
+
+    println!("2.Unpark the Thread");
+    park_thread.thread().unpark();
+    println!("3.Unwrap the Thread");
+    park_thread.join().unwrap(); // the join handle waits for the associated thread to finish
+
+
+    println!("Section 20 - Exercise—Build Your Own Multi-Threads in Rust");
+    // Section 20 - Exercise—Build Your Own Multi-Threads in Rust
+    /*
+    Exercise - Build your own threads in Rust
+    1. Create two definite loops in the main function.
+
+    2. One loop should be set to a spawn thread x which runs from 1 to 20 with a sleep duration
+    of half the time of the main thread loop. The spawn thread should also print the index values of each
+    iteratin as it loops util completion as should the main thread loop.
+
+    3. The other loop should run in the main thread with a sleep duration of twice the time
+    of the spawn threaded loop.
+    The loop should run only from 1 to 5 and should also print each index valued tagged as the main thread.
+
+    4. Ensure the spawn thread has a full completion of its run even if the main thread finishes.
+
+    */
+
+    let x_thread = thread::Builder::new().spawn(
+        || {
+            for x in 1..20 {
+                println!("x Thread index is {}", x);
+            }
+            println!("x Thread loop...end");
+        }
+    ).unwrap(); // give me the result and if there is an error paniccc and stop the program
+
+    let y_thread = thread::Builder::new().spawn(
+        || {
+            for y in 1..5 {
+               println!("y Thread index is {}", y);
+               thread::sleep(Duration::from_millis(0));
+            }
+            println!("y Thread loop...end");
+        }
+    ).unwrap(); // give me the result and if there is an error paniccc and stop the program    
+    
+    println!("x.Unpark the Thread");
+    x_thread.thread().unpark();
+    println!("x.Unwrap the Thread");
+    x_thread.join().unwrap(); // the join handle waits for the associated thread to finish
+
+    println!("y.Unpark the Thread");
+    y_thread.thread().unpark();
+    println!("y.Unwrap the Thread");
+    y_thread.join().unwrap(); // the join handle waits for the associated thread to finish
 
     println!("Chapter 5 - Section 19...end");
 }
