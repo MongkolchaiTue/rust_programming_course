@@ -1,3 +1,6 @@
+// packtpub.com Rust Programming 2023 - A Comprehensive Course for Beginners By : Clarian North
+// coding example by Mongkolchai Tue
+
 fn main() {
     //println!("Hello, world!");
     // Chapter 5 - Intermediate to Advanced Videos in Rust
@@ -44,7 +47,7 @@ fn cpt5_sct15_pointers() {
     but also have additional metadata and capabilities.
 
     The concept of smart pointers isn't unique ro Rust: smart pointers originated in C++
-    and exist in other languages as...
+    and exist in other languages as well.
     Rust has a variety of smart pointers defined in the standard library
     that provide functionality beyond that provided by referrences.
 
