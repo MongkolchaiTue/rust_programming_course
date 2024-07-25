@@ -121,6 +121,24 @@ fn cpt5_sct18_multi_threads() {
     println!("y.Unwrap the Thread");
     y_thread.join().unwrap(); // the join handle waits for the associated thread to finish
 
+
+
+    println!("Section 21 - Solution - Exercise Build Your Own Multi-Threads in Rust");
+    // Exercise Solution
+    let x = thread::spawn( || {
+        for i in 1..21 {
+            println!("spawn thread: {}", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..6 {
+        println!("main thread: {}", i);
+        thread::sleep(Duration::from_millis(2));
+    }
+
+    x.join().unwrap(); // the join handle waits for the associated thread to finish
+
     println!("Chapter 5 - Section 19...end");
 }
 
