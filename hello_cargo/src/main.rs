@@ -3,6 +3,10 @@
 
 fn main() {
     //println!("Hello, world!");
+
+    // What's in 1.80.0 stable
+    sample_update_v1800();
+
     // Chapter 5 - Intermediate to Advanced Videos in Rust
 
     // Chapter 5 - Section 19 - Multi-Threads in Rust
@@ -14,9 +18,45 @@ fn main() {
     //Chapter 5 - Selection 14 - What are Closures in Rust
     cpt5_sct14_closures();
 
-    //Chapter 5 - Selection 10 - What is Iter in Rust and Iterators
+    // Chapter 5 - Selection 10 - What is Iter in Rust and Iterators
     cpt5_sct10_iterator();
 
+}
+
+fn sample_update_v1800() {
+    println!("What's in 1.80.0 stable LazyCell and LazyLock");
+
+    /*
+    What's in 1.80.0 stable
+    LazyCell and LazyLock
+    These "lazy" types delay the initialization of their data until first access.
+    They are similar to the OnceCell and OnceLock types stabilized in 1.70,
+    but with the initialization function included in the cell.
+    This completes the stabilization of functionality adopted into
+    the standard library from the popular lazy_static and once_cell crates.
+
+    LazyLock is the thread-safe option, making it suitable for places like static values.
+
+    For example,
+    both the spawn thread and the main scope will see the exact same duration below,
+    since LAZY_TIME will be initialized once, by whichever ends up accessing the static first.
+    Neither use has to know how to initialize it,
+    unlike they would with OnceLock::get_or_init().
+    */
+    use std::sync::LazyLock;
+    use std::time::Instant;
+
+    static LAZY_TIME: LazyLock<Instant> = LazyLock::new(Instant::now);
+
+    let start = Instant::now();
+    std::thread::scope(|s| {
+        s.spawn(|| {
+            println!("Thread lazy time is {:?}", LAZY_TIME.duration_since(start));
+        });
+        println!("Main lazy time is {:?}", LAZY_TIME.duration_since(start));
+    });
+
+     println!("What's in 1.80.0 stable...end")
 }
 
 
