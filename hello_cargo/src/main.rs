@@ -35,7 +35,8 @@ fn sample_update_v1800() {
     This completes the stabilization of functionality adopted into
     the standard library from the popular lazy_static and once_cell crates.
 
-    LazyLock is the thread-safe option, making it suitable for places like static values.
+    LazyLock
+    is the thread-safe option, making it suitable for places like static values.
 
     For example,
     both the spawn thread and the main scope will see the exact same duration below,
@@ -43,18 +44,55 @@ fn sample_update_v1800() {
     Neither use has to know how to initialize it,
     unlike they would with OnceLock::get_or_init().
     */
+
+    /*
+    LazyCell
+    does the same thing without thread synchronization, so it doesn't implement Sync,
+    which is needed for static, but it can still be used in thread_local! statics
+    (with distinct initialization per thread).
+    
+    Either type can also be used in other data structures as well,
+    depending on thread-safety needs, so lazy initialization is available everywhere!
+    */
+
+    use std::cell::LazyCell;
     use std::sync::LazyLock;
     use std::time::Instant;
 
     static LAZY_TIME: LazyLock<Instant> = LazyLock::new(Instant::now);
+    let lazy_time2: LazyCell<Instant> = LazyCell::new(Instant::now);
 
     let start = Instant::now();
     std::thread::scope(|s| {
         s.spawn(|| {
-            println!("Thread lazy time is {:?}", LAZY_TIME.duration_since(start));
+            println!("Thread lazyLock time is {:?}", LAZY_TIME.duration_since(start));
         });
-        println!("Main lazy time is {:?}", LAZY_TIME.duration_since(start));
+        println!("Main lazyCell time is {:?}", lazy_time2.duration_since(start));
     });
+
+    println!("Checked cfg names and values");
+    /*
+    Checked cfg names and values
+    In 1.79, rustc stabilized a --check-cfg flag, and now Cargo 1.80
+    is enabling those checks for all cfg names and values that it knows
+    (in addition to the well known names and values from rustc).
+    This includes feature names from Cargo.toml as well as new cargo::rustc-check-cfg output from build scripts.
+
+    Unexpected cfgs are reported by the warn-by-default unexpected_cfgs lint,
+    which is meant to catch typos or other misconfiguration. For example,
+    in a project with an optional rayon dependency,
+    this code is configured for the wrong feature value:
+
+    */
+    /*
+    println!("Hello, world!");
+
+    #[cfg(feature = "crayon")]
+    rayon::join(
+        || println!("Hello, Thing One!"),
+        || println!("Hello, Thing Two!"),
+    );
+    */
 
      println!("What's in 1.80.0 stable...end")
 }
